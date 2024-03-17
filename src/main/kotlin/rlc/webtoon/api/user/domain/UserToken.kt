@@ -1,6 +1,7 @@
 package rlc.webtoon.api.user.domain
 
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -15,7 +16,7 @@ import rlc.webtoon.api.common.domain.BaseEntity
 @Entity
 class UserToken(
         @JoinColumn(name = "userId")
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         val user: User,
         val refreshToken: String
 ) : BaseEntity() {
