@@ -5,11 +5,13 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import rlc.webtoon.api.auth.presentation.GlobalAuthInterceptor
 import rlc.webtoon.api.auth.presentation.JwtArgumentResolver
 
 @Configuration
 class WebConfig(
         private val jwtArgumentResolver: JwtArgumentResolver,
+        private val globalAuthInterceptor: GlobalAuthInterceptor
 ) : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
@@ -26,6 +28,8 @@ class WebConfig(
     }
 
     override fun addInterceptors(registry: InterceptorRegistry) {
+        registry.addInterceptor(globalAuthInterceptor)
+                .addPathPatterns("/auth/**")
         super.addInterceptors(registry)
     }
 }

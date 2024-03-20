@@ -36,7 +36,7 @@ class JwtArgumentResolver(
 
         val request: HttpServletRequest = webRequest.nativeRequest as HttpServletRequest
 
-        val jwt: String = getJwt(request)
+        val jwt: String = jwtService.getJwtFromRequest(request)
 
         if (jwtService.isValid(jwt)) {
             val accountId: String = jwtService.extractAccountId(jwt)
@@ -44,13 +44,6 @@ class JwtArgumentResolver(
         }
 
         throw ApiError(Error.INVALID_JWT)
-    }
-
-    private fun getJwt(request: HttpServletRequest): String {
-
-        val authorization: String? = request.getHeader(AUTHORIZATION)
-
-        return authorization?.takeIf { it.startsWith("Bearer ") }?.substring(7) ?: ""
     }
 
 }

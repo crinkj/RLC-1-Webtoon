@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Service
 import io.jsonwebtoken.Jwts
+import jakarta.servlet.http.HttpServletRequest
+import rlc.webtoon.api.auth.presentation.JwtArgumentResolver
 import rlc.webtoon.api.config.JwtProperties
 import java.util.Date
 import javax.crypto.SecretKey
@@ -42,6 +44,12 @@ class JwtService(
             getAllClaims(jwt)
                     .subject
 
+    fun getJwtFromRequest(request: HttpServletRequest): String {
+
+        val authorization: String? = request.getHeader(JwtArgumentResolver.AUTHORIZATION)
+
+        return authorization?.takeIf { it.startsWith("Bearer ") }?.substring(7) ?: ""
+    }
 
     private fun isExpired(jwt: String): Boolean =
             getAllClaims(jwt)
