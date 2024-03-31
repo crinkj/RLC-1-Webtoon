@@ -15,7 +15,7 @@ data class WebtoonResponse(
                 id = webtoon.id,
                 title = webtoon.title,
                 content = webtoon.content,
-                price = webtoon.price,
+                price = webtoon.requiredLeaves,
                 author = webtoon.author,
                 isFree = webtoon.isFree
         )

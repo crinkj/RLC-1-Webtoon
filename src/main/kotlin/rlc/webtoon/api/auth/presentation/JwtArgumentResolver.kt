@@ -33,13 +33,12 @@ class JwtArgumentResolver(
                                  mavContainer: ModelAndViewContainer?,
                                  webRequest: NativeWebRequest,
                                  binderFactory: WebDataBinderFactory?): Any {
-
         val request: HttpServletRequest = webRequest.nativeRequest as HttpServletRequest
-
         val jwt: String = jwtService.getJwtFromRequest(request)
 
         if (jwtService.isValid(jwt)) {
             val accountId: String = jwtService.extractAccountId(jwt)
+
             return UserAuth(accountId)
         }
 

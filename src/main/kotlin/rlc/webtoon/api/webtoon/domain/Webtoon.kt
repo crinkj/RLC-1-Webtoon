@@ -9,7 +9,7 @@ import rlc.webtoon.api.webtoon.domain.value.WebtoonDay
 class Webtoon(
         val title: String,
         val content: String,
-        val price: Int?,
+        val requiredLeaves: Int?,
         val author: String,
         val isFree: Boolean = true,
         val day: WebtoonDay

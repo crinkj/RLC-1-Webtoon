@@ -12,16 +12,34 @@ class Payment(
         @JoinColumn(name = "userId")
         val user: User,
         val paidAmount: Int,
+        val purchasedLeaves: Int,
         @Column(unique = true)
         val impUid: String,
         val purchasedName: String,
-        val isRefunded: Boolean = false,
-        val refundedAt: Instant?,
-        val remainedAmount: Int?,
+        var isRefunded: Boolean = false,
+        var refundedAt: Instant?,
         val refundedAmount: Int?,
 ) : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
+
+    companion object {
+        fun create(user: User, paidAmount: Int, impUid: String, purchasedName: String, purchasedLeaves: Int) = Payment(
+                user = user,
+                paidAmount = paidAmount,
+                impUid = impUid,
+                purchasedName = purchasedName,
+                refundedAmount = null,
+                refundedAt = null,
+                purchasedLeaves = purchasedLeaves
+        )
+    }
+
+    fun refund(refundedAmount: Int) {
+        this.isRefunded = true
+        this.refundedAt = Instant.now()
+        this.refundedAt = refundedAt
+    }
 }
